@@ -3,7 +3,7 @@
         "web": {
             "path": "",
             "host": "localhost",
-            "port": "8080"
+            "port": "54123"
         },
         "api": {
             "path": "",

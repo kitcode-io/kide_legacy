@@ -21,6 +21,29 @@ module.exports = function($scope, $rootScope, $http, commander, workspace, proje
     });
   }
 
+  function bindEvent(element, eventName, eventHandler) {
+    if (element.addEventListener) {
+      element.addEventListener(eventName, eventHandler, false);
+    } else if (element.attachEvent) {
+      element.attachEvent('on' + eventName, eventHandler);
+    }
+  }
+
+  window.onload = function() {
+    window.parent.postMessage('loaded', '*');
+  };
+
+  bindEvent(window, 'message', function(e) {
+    var data = JSON.parse(e.data);
+    document.getElementById("console").innerHTML =
+      "<iframe src=\"" + data.terminal +
+      "\" style=\"width: 100%;height:100%; \" frameborder=\"0\"></iframe>";
+    document.getElementById("eye").innerHTML =
+      "<a style=\"background-color: #555; color: white;\" target=\"_blank\" href=\"" +
+      data.preview +
+      "\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></a>";
+  });
+
   getFiles();
 
   $scope.$watch(getPaneDef, function(paneDef) {

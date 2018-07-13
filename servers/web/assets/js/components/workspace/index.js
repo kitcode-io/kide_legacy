@@ -8,12 +8,12 @@ require("./preview");
 require("ui-codemirror");
 
 module.exports = angular.module("plunker.component.workspace", [
-  "ui.codemirror",
-  "plunker.pane.preview"
-])
+    "ui.codemirror",
+    "plunker.pane.preview"
+  ])
 
 
-.factory("workspace", ["$rootScope", "commander", function($rootScope, commander) {
+  .factory("workspace", ["$rootScope", "commander", function($rootScope, commander) {
     var workspace = new Workspace();
 
     $rootScope.$on("file.remove.success", function($event, locals, entry) {
@@ -156,15 +156,36 @@ module.exports = angular.module("plunker.component.workspace", [
     });
 
     return workspace;
-  }
-])
+  }])
 
-.directive("plunkerWorkspace", function() {
+  .directive("plunkerWorkspace", function() {
     return {
       restrict: "E",
       replace: true,
       template: Fs.readFileSync(__dirname + "/template.html", "utf8"),
       controller: require("./controller"),
     };
-})
-;
+  })
+  .factory('socket', function($rootScope) {
+    var socket = io.connect('http://localhost:8080');
+    return {
+      on: function(eventName, callback) {
+        socket.on(eventName, function() {
+          var args = arguments;
+          $rootScope.$apply(function() {
+            callback.apply(socket, args);
+          });
+        });
+      },
+      emit: function(eventName, data, callback) {
+        socket.emit(eventName, data, function() {
+          var args = arguments;
+          $rootScope.$apply(function() {
+            if (callback) {
+              callback.apply(socket, args);
+            }
+          });
+        })
+      }
+    };
+  });
