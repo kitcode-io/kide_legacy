@@ -1,7 +1,7 @@
-user=$1
+id=$1
+echo $id > info.txt
 mkdir /project
 touch /project/index.js
-sed -i s/qwertyuiop/$user/g kide/servers/web/views/editor.html
 pm2 start /kide/server.js --name kide
 cd /project
 python ../kide/terminal/unique.py

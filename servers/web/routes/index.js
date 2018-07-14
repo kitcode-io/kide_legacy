@@ -82,6 +82,14 @@ module.exports = function(options) {
         });
       });
     }
+  }, {
+    method: 'GET',
+    path: '/getInfo',
+    handler: function(request, reply) {
+      fs.readFile('/info.txt','utf8', function(err, content) {
+        reply(content);
+      });
+    }
   }];
 
   return routes;

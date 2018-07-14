@@ -1,4 +1,4 @@
-module.exports = function($scope, $rootScope, $http, commander, workspace, project) {
+module.exports = function($scope, $rootScope, $http, socket, commander, workspace, project) {
   this.layout = workspace.layout;
   this.isActive = workspace.isActive.bind(workspace);
   this.activate = workspace.activate.bind(workspace);
@@ -12,7 +12,6 @@ module.exports = function($scope, $rootScope, $http, commander, workspace, proje
 
   function getFiles() {
     $http.get('/getFiles').then(function(res) {
-      console.log(res.data);
       commander.execute("project.reset").then(function() {
         commander.execute("project.openTree", {
           tree: res.data
@@ -31,6 +30,12 @@ module.exports = function($scope, $rootScope, $http, commander, workspace, proje
 
   window.onload = function() {
     window.parent.postMessage('loaded', '*');
+    $http.get('/getInfo').then(function(res) {
+      console.log(res.data);
+      socket.emit('info', {
+        id: res.data
+      });
+    });
   };
 
   bindEvent(window, 'message', function(e) {
@@ -45,6 +50,9 @@ module.exports = function($scope, $rootScope, $http, commander, workspace, proje
   });
 
   getFiles();
+  socket.on('close', function() {
+    window.parent.postMessage('close', '*');
+  });
 
   $scope.$watch(getPaneDef, function(paneDef) {
     var entries = project.entries[paneDef.id];

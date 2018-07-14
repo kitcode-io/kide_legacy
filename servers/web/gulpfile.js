@@ -155,4 +155,4 @@ Gulp.task("landing:watch", function () {
 
 ////////////////////////////////////////////////////////////////////////////////
 Gulp.task("default", ["editor:watch", "landing:watch"]);
-Gulp.task("build",["landing:inject", "editor:inject"]);
+Gulp.task("build",[ "editor:inject"]);
