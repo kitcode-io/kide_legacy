@@ -25,7 +25,7 @@ def main(argv):
     app = tornado.web.Application(handlers, static_path=STATIC_DIR,
                       template_path=TEMPLATE_DIR,
                       xstatic_url = tornado_xstatic.url_maker('/xstatic/'))
-    app.listen(9090)
+    app.listen(54124)
     run_and_show_browser("http://localhost:9090/", term_manager)
 
 if __name__ == '__main__':

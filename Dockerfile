@@ -20,3 +20,6 @@ RUN python get-pip.py
 ADD . /kide
 RUN pip install -r /kide/terminal/requirements.txt
 ADD start.sh /
+RUN apt-get install -y apache2
+ADD index /
+ADD virtualhost.sh /
