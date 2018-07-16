@@ -50,9 +50,18 @@ module.exports = function($scope, $rootScope, $http, socket, commander, workspac
   });
 
   getFiles();
+
   socket.on('close', function() {
     window.parent.postMessage('close', '*');
   });
+
+  $scope.min = function () {
+    window.parent.postMessage('minimize', '*');
+  }
+
+  $scope.max = function() {
+    window.parent.postMessage('maximize', '*');
+  }
 
   $scope.$watch(getPaneDef, function(paneDef) {
     var entries = project.entries[paneDef.id];
