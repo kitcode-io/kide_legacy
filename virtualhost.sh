@@ -4,7 +4,7 @@ TEXTDOMAIN=virtualhost
 
 ### Set default parameters
 action=$1
-domain=$2
+useless=$2
 rootDir=$3
 port=$4
 owner=$(who am i | awk '{print $1}')
@@ -13,6 +13,10 @@ sitesEnable='/etc/apache2/sites-enabled/'
 sitesAvailable='/etc/apache2/sites-available/'
 userDir='/var/www/'
 sitesAvailabledomain=$sitesAvailable$domain.conf
+domain=$(<salt.txt)
+constant="-app.kitcode.io"
+domain="$domain$constant"
+echo "$domain"
 
 ### don't modify from here unless you know what you are doing ####
 
