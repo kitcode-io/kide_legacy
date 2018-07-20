@@ -21,5 +21,14 @@ ADD . /kide
 RUN pip install -r /kide/terminal/requirements.txt
 ADD start.sh /
 RUN apt-get install -y apache2
+RUN a2enmod proxy \
+    && a2enmod proxy_http \
+    && a2enmod proxy_ajp \
+    && a2enmod rewrite \
+    && a2enmod deflate \
+    && a2enmod headers \
+    && a2enmod proxy_balancer \
+    && a2enmod proxy_connect \
+    && a2enmod proxy_html
 ADD index /
 ADD virtualhost.sh /

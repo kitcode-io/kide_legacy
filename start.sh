@@ -6,4 +6,4 @@ touch /project/index.js
 pm2 start /kide/server.js --name kide
 cd /project
 pm2 start ../kide/terminal/unique.py --name terminal
-./index
+/index
