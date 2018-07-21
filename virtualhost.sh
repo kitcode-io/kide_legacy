@@ -4,7 +4,7 @@ TEXTDOMAIN=virtualhost
 
 ### Set default parameters
 action=$1
-filename=$2
+domain=$2
 rootDir=$3
 port=$4
 owner=$(who am i | awk '{print $1}')
@@ -12,11 +12,7 @@ email='webmaster@localhost'
 sitesEnable='/etc/apache2/sites-enabled/'
 sitesAvailable='/etc/apache2/sites-available/'
 userDir='/var/www/'
-sitesAvailabledomain=$sitesAvailable$filename.conf
-domain=$(<salt.txt)
-constant="-app.kitcode.io"
-domain="$domain$constant"
-echo "$domain"
+sitesAvailabledomain=$sitesAvailable$domain.conf
 
 ### don't modify from here unless you know what you are doing ####
 
@@ -118,7 +114,7 @@ if [ "$action" == 'create-proxy' ]
 		fi
 
 		### enable website
-		a2ensite $filename
+		a2ensite $domain
 
 		### restart Apache
 		/etc/init.d/apache2 reload
@@ -138,7 +134,7 @@ if [ "$action" == 'create-proxy' ]
 			sed -i "/$newhost/d" /etc/hosts
 
 			### disable website
-			a2dissite $filename
+			a2dissite $domain
 
 			### restart Apache
 			/etc/init.d/apache2 reload
@@ -234,7 +230,7 @@ if [ "$action" == 'create' ]
 		fi
 
 		### enable website
-		a2ensite $filename
+		a2ensite $domain
 
 		### restart Apache
 		/etc/init.d/apache2 reload
@@ -253,7 +249,7 @@ if [ "$action" == 'create' ]
 			sed -i "/$newhost/d" /etc/hosts
 
 			### disable website
-			a2dissite $filename
+			a2dissite $domain
 
 			### restart Apache
 			/etc/init.d/apache2 reload
