@@ -14,6 +14,74 @@ sitesAvailable='/etc/apache2/sites-available/'
 userDir='/var/www/'
 sitesAvailabledomain=$sitesAvailable$domain.conf
 
+deleteDomain() {
+	### Delete domain in /etc/hosts
+	newhost=${domain//./\\.}
+	sed -i "/$newhost/d" /etc/hosts
+	### disable website
+	a2dissite $domain
+	### restart Apache
+	/etc/init.d/apache2 reload
+	### Delete virtual host rules files
+	rm $sitesAvailabledomain
+}
+
+
+createDomain() {
+		if ! echo "
+		<VirtualHost *:80>
+			ServerAdmin $email
+			ServerName  $domain
+			ServerAlias $domain
+			DocumentRoot $rootDir
+			<Directory />
+				Options -Indexes +FollowSymLinks
+				AllowOverride None
+				Require all granted
+			</Directory>
+			ProxyPreserveHost On
+			ProxyVia Full
+			<Proxy *>
+			      Require all granted
+			</Proxy>
+		       ProxyPass / http://127.0.0.1:$port/
+		       ProxyPassReverse /  http://127.0.0.1:$port/
+		       ErrorLog /var/log/apache2/$domain-error.log
+		       LogLevel error
+		       CustomLog /var/log/apache2/$domain-access.log combined
+		</VirtualHost>" > $sitesAvailabledomain
+		then
+			echo -e $"There is an ERROR creating $domain file"
+			exit;
+		else
+			echo -e $"\nNew Virtual Host Created\n"
+		fi
+
+		### Add domain in /etc/hosts
+		if ! echo "127.0.0.1	$domain" >> /etc/hosts
+		then
+			echo $"ERROR: Not able to write in /etc/hosts"
+			exit;
+		else
+			echo -e $"Host added to /etc/hosts file \n"
+		fi
+
+		if [ "$owner" == "" ]; then
+			chown -R $(whoami):$(whoami) $rootDir
+		else
+			chown -R $owner:$owner $rootDir
+		fi
+
+		### enable website
+		a2ensite $domain
+
+		### restart Apache
+		/etc/init.d/apache2 reload
+
+		### show the finished message
+		echo -e $"Complete! \nYou now have a new Virtual Host \nYour new host is: http://$domain \nAnd its located at $rootDir"
+}
+
 ### don't modify from here unless you know what you are doing ####
 
 if [ "$(whoami)" != 'root' ]; then
@@ -49,6 +117,8 @@ if [ "$action" == 'create-proxy' ]
 		### check if domain already exists
 		if [ -e $sitesAvailabledomain ]; then
 			echo -e $"This domain already exists.\nPlease Try Another one"
+			deleteDomain
+			createDomain
 			exit;
 		fi
 
