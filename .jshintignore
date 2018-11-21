@@ -1,0 +1,4 @@
+./node_modules
+./servers/web/node_modules
+./servers/web/public
+./servers/web/assets

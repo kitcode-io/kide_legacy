@@ -4,7 +4,6 @@ var Rimraf = require("gulp-rimraf");
 var Less = require("gulp-less");
 var Rev = require("gulp-rev");
 var Inject = require("gulp-inject");
-var Watchify = require("watchify");
 var Source = require("vinyl-source-stream");
 var Sequence = require("run-sequence");
 var browserify = require('browserify');

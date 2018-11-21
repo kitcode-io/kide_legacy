@@ -1,7 +1,7 @@
 var handlebars = require('handlebars');
 var Vision = require("vision");
 var Inert = require('inert');
-var Routes = require('./routes');
+var routes = require('./routes');
 
 exports.register = function(plugin, options, next) {
 
@@ -17,7 +17,7 @@ exports.register = function(plugin, options, next) {
     });
 
     plugin.register([Inert, Vision], function(err) {
-
+        if (err) throw err;
         plugin.views({
             engines: {
                 html: handlebars
@@ -27,7 +27,7 @@ exports.register = function(plugin, options, next) {
         });
 
         plugin.bind(context);
-        plugin.route(Routes(options));
+        plugin.route(routes);
 
     });
 

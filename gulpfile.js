@@ -1,7 +1,8 @@
 const gulp = require('gulp');
-const git = require('gulp-git');
+const jshint = require('gulp-jshint');
 const shelljs = require('shelljs');
 const argv = require('yargs').argv;
+const symlink = require('gulp-symlink');
 
 gulp.task('binary', function() {
     let target = 'linux';
@@ -30,4 +31,15 @@ gulp.task('docker', function() {
 
 gulp.task('start:kide', function() {
     shelljs.exec('docker run -d kide:dev bash start.sh 12345 local');
+});
+
+gulp.task('lint', function () {
+  return gulp.src('./**/*.js')
+    .pipe(jshint('.jshintrc'))
+    .pipe(jshint.reporter('jshint-stylish'));
+});
+
+gulp.task('hook', function () {
+  return gulp.src('.pre-commit')
+    .pipe(symlink('.git/hooks/', 'pre-commit'));
 });
