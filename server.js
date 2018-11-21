@@ -1,6 +1,5 @@
 var Glue = require('glue');
-var Config = require("./config.json");
-
+var Config = require("./config/config.json");
 
 var manifest = {
   connections: [{

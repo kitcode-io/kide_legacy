@@ -14,9 +14,20 @@ gulp.task('binary', function() {
     }
     shelljs.exec('git clone git@gitlab.com:kitcode/port-detector.git && cd port-detector && npm install && cd ..', function(err) {
         if (err) throw err;
-        shelljs.exec('pkg -t node4-'+target+'-x64 port-detector/lib/index.js', function(err){
-	  if (err) throw err;
-	  shelljs.exec('rm -rf port-detector');
-	});
+        shelljs.exec('./node_modules/.bin/pkg -t node4-' + target + '-x64 port-detector/lib/index.js', function(err) {
+            if (err) throw err;
+            shelljs.exec('rm -rf port-detector');
+        });
     });
+});
+
+gulp.task('docker', function() {
+    shelljs.exec('docker build -t kide:dev .', function(err) {
+        if (err) throw err;
+	shelljs.exec("rm index");
+    });
+});
+
+gulp.task('start:kide', function() {
+    shelljs.exec('docker run -d kide:dev bash start.sh 12345 local');
 });

@@ -10,16 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "glue": "^4.1.0",
-    "gulp-git": "^2.8.0",
-    "hapi": "^16.1.0",
-    "hapi-io": "^0.2.1",
-    "hoek": "^5.0.3",
-    "pkg": "^4.3.4",
-    "shelljs": "^0.8.3",
-    "socket.io": "^0.9.18"
+    "hoek": "^5.0.3"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
-    "yargs": "^12.0.4"
+    "yargs": "^12.0.4",
+    "pkg": "^4.3.4",
+    "gulp-git": "^2.8.0",
+    "shelljs": "^0.8.3"
   }
 }

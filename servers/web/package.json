@@ -34,7 +34,7 @@
     "node-summary": "~1.0.0",
     "paypal-rest-sdk": "^1.8.1",
     "payumoney-node": "^1.1.9",
-    "request": "~2.34.0",
+    "request": "^2.88.0",
     "txnid": "^1.0.1",
     "ui-codemirror": "github:souparno/ui-codemirror",
     "variables": "^1.0.1",

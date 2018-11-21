@@ -1,0 +1,8 @@
+{
+    "server": {
+        "web": {
+            "host": "localhost",
+            "port": "54123"
+        }
+    }
+}
