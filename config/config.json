@@ -1,8 +1,8 @@
 {
     "server": {
-        "web": {
+        "ide": {
             "host": "localhost",
-            "port": "54123"
+            "port": "8080"
         }
     }
 }

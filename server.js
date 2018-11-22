@@ -3,18 +3,18 @@ var Config = require("./config/config.json");
 
 var manifest = {
   connections: [{
-    port: Config.server.web.port,
-    labels: ['web'],
+    port: Config.server.ide.port,
+    labels: ['ide'],
   }],
   registrations: [{
     plugin: {
-      register: './servers/web',
+      register: './servers/ide',
       options: {
         config: Config
       }
     },
     options: {
-      select: ['web']
+      select: ['ide']
     }
   }]
 };
