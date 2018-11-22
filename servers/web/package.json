@@ -39,7 +39,8 @@
     "ui-codemirror": "github:souparno/ui-codemirror",
     "variables": "^1.0.1",
     "vision": "^4.1.1",
-    "when": "~3.2.1"
+    "when": "~3.2.1",
+    "passport-dropbox-oauth2": "~0.1.5"
   },
   "devDependencies": {
     "brfs": "^1.1.1",
@@ -51,9 +52,8 @@
     "gulp-rev": "^0.4.0",
     "gulp-rimraf": "^0.1.0",
     "gulp-util": "^2.2.14",
-    "passport-dropbox-oauth2": "~0.1.5",
     "run-sequence": "^0.3.6",
     "vinyl-source-stream": "^0.1.1",
-    "watchify": "^0.10.1"
+    "watchify": "^3.11.0"
   }
 }
