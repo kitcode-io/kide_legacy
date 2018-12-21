@@ -4,8 +4,6 @@ var Inert = require('inert');
 var routes = require('./routes');
 
 exports.register = function(plugin, options, next) {
-
-
     var context = {
         config: options.config,
         local: options.config.expose,

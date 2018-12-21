@@ -1,4 +1,3 @@
-var Fs = require("fs");
 var _ = require("lodash");
 
 require("../components/commander");
@@ -30,8 +29,7 @@ module.exports = angular.module('plunker', [
         });
     }])
 
-
-    .controller("EditorController", function($rootScope, $scope, $location, urlState, commander, project, notifier, config) {
+    .controller("EditorController", function($scope, $location, urlState, project) {
 
         urlState.addState({
             name: "plunkId",
